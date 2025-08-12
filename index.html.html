@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quiz do CFMV — Telas 1 a 15</title>
+<style>
+  :root{
+    --teal-dark:#00796b;
+    --teal-darker:#004d40;
+    --green:#00a651;
+  }
+  *{box-sizing:border-box}
+
+  /* Fonte Garet (opcional: coloque os arquivos na mesma pasta) */
+  @font-face{
+    font-family:"Garet";
+    src:
+      url("Garet-Heavy.woff2") format("woff2"),
+      url("Garet-Heavy.woff") format("woff");
+    font-weight:800;
+    font-style:normal;
+    font-display:swap;
+  }
+
+  body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#333333;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  /* Fundo fixo (estável em tablet/iPhone) */
+  .bg-fixed{
+    position:fixed; inset:0; width:100%; height:100%;
+    object-fit:cover; z-index:-1; pointer-events:none; user-select:none;
+  }
+
+  .container{
+    background:#fff; width:92%; max-width:800px; min-height:560px;
+    border-radius:14px; box-shadow:0 10px 26px rgba(0,0,0,.25);
+    display:flex; flex-direction:column; align-items:center; padding:20px 24px 16px;
+  }
+
+  /* Logo */
+  .brand{display:flex; justify-content:center; width:100%; margin-bottom:8px;}
+  .brand img{max-width:320px; height:auto;}
+
+  .screen{
+    display:none; width:100%; max-width:680px;
+    flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; gap:14px; margin-top:4px; color:#333333;
+  }
+
+  /* TELA 1 */
+  #screen-1{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;
+  }
+  #screen-1 h1{
+    font-family:"Garet","Montserrat",Arial,Helvetica,sans-serif;
+    font-size:3.6rem; font-weight:800; letter-spacing:.2px; line-height:1.25; margin:-10px 0 0;
+  }
+  #screen-1 .highlight{ color:var(--green); font-weight:900; }
+
+  p{margin:0 0 8px;}
+  button{
+    background:var(--teal-dark); color:#fff; border:none; border-radius:10px;
+    padding:12px 22px; font-size:18px; cursor:pointer; transition:background .2s ease;
+  }
+  button:hover{background:var(--teal-darker);}
+  button:disabled{background:#9fd7d0; cursor:not-allowed;}
+
+  /* TELA 2 */
+  .input-row{display:flex; gap:12px; width:100%; flex-wrap:wrap; justify-content:center;}
+  .input-group{flex:1 1 260px; display:flex; flex-direction:column; text-align:left;}
+  label{font-weight:700; margin-bottom:6px; color:#333333;}
+  input[type="text"], input[type="email"]{
+    border:1.6px solid #bfe8e2; border-radius:8px; padding:11px 12px; font-size:16px; width:100%; color:#333333;
+  }
+  .consent-line{display:flex; align-items:center; gap:10px; width:100%; justify-content:center;}
+  input[type="checkbox"]{
+    appearance:none; width:20px; height:20px; border:2px solid #2b8c86; border-radius:4px; cursor:pointer; position:relative;
+  }
+  input[type="checkbox"]:checked{background:#2b8c86;}
+  input[type="checkbox"]:checked::after{
+    content:""; position:absolute; left:5px; top:1px; width:6px; height:12px; border:3px solid #fff;
+    border-top:none; border-left:none; transform:rotate(45deg);
+  }
+  .checkbox-label{cursor:pointer; color:#333333;}
+
+  /* Botões centralizados */
+  .actions-bottom-right{width:100%; display:flex; justify-content:center; margin-top:auto;}
+  .confirm-wrap{width:100%; display:flex; justify-content:center;}
+
+  /* LGPD */
+  .lgpd-note{
+    font-size:0.75rem; color:#555; text-align:left; width:100%; margin-top:50px;
+  }
+
+  /* Perguntas */
+  .options{display:flex; flex-direction:column; gap:12px; width:100%; text-align:left;}
+  .option{
+    background:#e9f6f4; padding:12px 16px; border-radius:10px; border:2px solid transparent;
+    font-size:18px; cursor:pointer; color:#333333;
+  }
+  .option:hover{background:#d8efeb;}
+  .option.selected{border-color:#26a69a; box-shadow:0 0 0 2px rgba(38,166,154,.15) inset;}
+  .option.correct{background:#8bc34a !important; color:#fff; border-color:#558b2f;}
+  .option.wrong{background:#ef9a9a !important; color:#fff; border-color:#b71c1c;}
+
+  /* Informativas */
+  .info-card{
+    background:#eefbfc; color:#333333; border-radius:12px; padding:16px 18px; width:100%;
+    border:1px solid #cfeff3; white-space:pre-line; text-align:left;
+  }
+
+  @media (max-width:480px){
+    #screen-1 h1{font-size:2.1rem;}
+    .brand img{max-width:260px;}
+    button{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Fundo -->
+<img class="bg-fixed" src="./fundo.png" alt="Fundo do quiz" />
+
+<div class="container">
+  <!-- Logo -->
+  <div class="brand">
+    <img src="./logo_cfmv.png" alt="Logo CFMV/CRMV-SP">
+  </div>
+
+  <!-- TELA 1 -->
+  <div id="screen-1" class="screen" style="display:flex;">
+    <h1>Participe do<br><span class="highlight">Quiz</span> do CFMV</h1>
+    <button id="btn-1-next">Próximo</button>
+  </div>
+
+  <!-- TELA 2 -->
+  <div id="screen-2" class="screen">
+    <h2>Cadastro</h2>
+    <div class="input-row">
+      <div class="input-group">
+        <label for="nome">Qual é o seu nome?</label>
+        <input id="nome" type="text" autocomplete="off" />
+      </div>
+      <div class="input-group">
+        <label for="email">E-mail:</label>
+        <input id="email" type="email" autocomplete="off" />
+      </div>
+    </div>
+    <div class="consent-line">
+      <input id="consent" type="checkbox" />
+      <label for="consent" class="checkbox-label">Aceito receber notícias do Sistema CFMV/CRMVs.</label>
+    </div>
+    <div class="actions-bottom-right">
+      <button id="btn-2-next" disabled>Próximo</button>
+    </div>
+    <div class="lgpd-note">
+      * Seus dados serão utilizados apenas para [finalidade específica] e serão armazenados com segurança.
+      Você pode solicitar a remoção de seus dados a qualquer momento, conforme a LGPD.
+      A Lei Geral de Proteção de Dados Pessoais (LGPD), Lei nº 13.709, promulgada em 14 de agosto de 2018.
+    </div>
+  </div>
+
+  <!-- TELA 3 -->
+  <div id="screen-3" class="screen">
+    <h2>1️⃣ O que é o CFMV?</h2>
+    <div class="options">
+      <button class="option" data-q="1" data-i="0">A. Um sindicato de médicos-veterinários</button>
+      <button class="option" data-q="1" data-i="1">B. Uma faculdade de Medicina Veterinária</button>
+      <button class="option" data-q="1" data-i="2">C. O órgão que normatiza, orienta e fiscaliza o exercício da Medicina Veterinária e da Zootecnia no Brasil</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="3">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 4 -->
+  <div id="screen-4" class="screen">
+    <h2>Você sabia? 💡</h2>
+    <div class="info-card">
+O CFMV é o Conselho Federal de Medicina Veterinária, um órgão federal que orienta,
+supervisiona e disciplina o exercício da Medicina Veterinária e da Zootecnia em todo o país.
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="5">Próximo</button></div>
+  </div>
+
+  <!-- TELA 5 -->
+  <div id="screen-5" class="screen">
+    <h2>2️⃣ O que significam as siglas CFMV e CRMV?</h2>
+    <div class="options">
+      <button class="option" data-q="2" data-i="0">A. Conselho Federativo de Medicina Veterinária e Conselho Regional de Medicina Veterinária</button>
+      <button class="option" data-q="2" data-i="1">B. Conselho de Medicina Veterinária e Conselho Regional de Medicina Veterinária</button>
+      <button class="option" data-q="2" data-i="2">C. Conselho Federal de Medicina Veterinária e Conselho Regional de Medicina Veterinária</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="5">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 6 -->
+  <div id="screen-6" class="screen">
+    <h2>Entenda:</h2>
+    <div class="info-card">
+O Conselho Federal de Medicina Veterinária (CFMV) atua em nível nacional e os Conselhos
+Regionais de Medicina Veterinária (CRMVs) funcionam em cada estado e no DF. Juntos,
+formam o Sistema CFMV/CRMVs, que regula e fiscaliza a profissão em todo o Brasil.
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="7">Próximo</button></div>
+  </div>
+
+  <!-- TELA 7 -->
+  <div id="screen-7" class="screen">
+    <h2>3️⃣ Há quantos anos existe o CFMV?</h2>
+    <div class="options">
+      <button class="option" data-q="3" data-i="0">A. 55 anos</button>
+      <button class="option" data-q="3" data-i="1">B. 56 anos</button>
+      <button class="option" data-q="3" data-i="2">C. 57 anos</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="7">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 8 -->
+  <div id="screen-8" class="screen">
+    <div class="info-card">
+O Conselho Federal de Medicina Veterinária (CFMV) foi criado pela Lei nº 5.517, de 23 de
+outubro de 1968. Em 2024, completou 56 anos de atuação!
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="9">Próximo</button></div>
+  </div>
+
+  <!-- TELA 9 -->
+  <div id="screen-9" class="screen">
+    <h2>4️⃣ Quantos Conselhos Regionais fazem parte do Sistema CFMV/CRMVs?</h2>
+    <div class="options">
+      <button class="option" data-q="4" data-i="0">A. 27</button>
+      <button class="option" data-q="4" data-i="1">B. 26</button>
+      <button class="option" data-q="4" data-i="2">C. 25</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="9">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 10 -->
+  <div id="screen-10" class="screen">
+    <div class="info-card">
+O Sistema CFMV/CRMVs é composto por um Conselho Federal (CFMV) e 27 Conselhos
+Regionais de Medicina Veterinária (CRMVs). Cada um atua localmente na fiscalização da
+profissão, conforme a Lei nº 5.517/68.
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="11">Próximo</button></div>
+  </div>
+
+  <!-- TELA 11 -->
+  <div id="screen-11" class="screen">
+    <h2>5️⃣ Qual é o Dia do Médico-Veterinário?</h2>
+    <div class="options">
+      <button class="option" data-q="5" data-i="0">A. 5 de setembro</button>
+      <button class="option" data-q="5" data-i="1">B. 8 de setembro</button>
+      <button class="option" data-q="5" data-i="2">C. 9 de setembro</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="11">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 12 -->
+  <div id="screen-12" class="screen">
+    <div class="info-card">
+A profissão foi oficialmente regulamentada em 9 de setembro de 1933. Desde então, essa é a
+data em que celebramos os médicos-veterinários no Brasil!
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="13">Próximo</button></div>
+  </div>
+
+  <!-- TELA 13 -->
+  <div id="screen-13" class="screen">
+    <h2>6️⃣ Segundo a Resolução de Publicidade CFMV nº 1649/2025, o que NÃO é permitido?</h2>
+    <div class="options">
+      <button class="option" data-q="6" data-i="0">A. Incluir nome completo, número do CRMV e qualificação profissional</button>
+      <button class="option" data-q="6" data-i="1">B. Compartilhar conteúdos educativos, científicos e de conscientização</button>
+      <button class="option" data-q="6" data-i="2">C. Fazer propaganda enganosa, sensacionalista ou abusiva</button>
+    </div>
+    <div class="confirm-wrap"><button class="confirm" data-screen="13">Confirmar resposta</button></div>
+  </div>
+
+  <!-- TELA 14 -->
+  <div id="screen-14" class="screen">
+    <div class="info-card">
+A publicidade profissional deve ser ética e responsável. Conteúdos enganosos, sensacionalistas
+ou que desrespeitem a concorrência estão proibidos.
+    </div>
+    <div class="confirm-wrap"><button class="next-info" data-next="15">Próximo</button></div>
+  </div>
+
+  <!-- TELA 15 -->
+  <div id="screen-15" class="screen">
+    <h2>Agradecemos pela participação! 💚</h2>
+    <p style="margin:12px 0 6px;">Aproveite pra seguir o CFMV nas redes:</p>
+    <p style="font-size:22px; margin:6px 0 18px;">@cfmvoficial</p>
+    <div class="confirm-wrap"><button id="btn-restart">Reiniciar</button></div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // gabarito
+  const answers = { 1:2, 2:2, 3:1, 4:0, 5:2, 6:2 };
+
+  // coleta (se quiser, dá pra exportar as respostas no final também)
+  const formData = {
+    name: "",
+    email: "",
+    consent: false,
+    answers: [] // { qNum, selectedIndex, correct, timestamp }
+  };
+
+  // pergunta -> tela informativa
+  const nextAfterQuestion = { 3:4, 5:6, 7:8, 9:10, 11:12, 13:14 };
+
+  // util
+  const screens = {};
+  for(let i=1;i<=15;i++){ screens[i] = document.getElementById(`screen-${i}`); }
+  function show(n){
+    Object.values(screens).forEach(s => s.style.display='none');
+    screens[n].style.display='flex';
+  }
+
+  // Tela 1 -> 2
+  document.getElementById('btn-1-next').onclick = ()=> show(2);
+
+  // TELA 2: validação (checkbox é opcional)
+  const nome = document.getElementById('nome');
+  const email = document.getElementById('email');
+  const consent = document.getElementById('consent');
+  const btn2 = document.getElementById('btn-2-next');
+
+  function validate(){
+    const ok = nome.value.trim().length > 1 &&
+               /\S+@\S+\.\S+/.test(email.value.trim());
+    btn2.disabled = !ok;
+  }
+  ['input','change'].forEach(ev=>{
+    nome.addEventListener(ev, validate);
+    email.addEventListener(ev, validate);
+  });
+
+  // ---- CSV de cadastro (baixado ao clicar Próximo da Tela 2) ----
+  function toCSV(rows){
+    return rows.map(r => r.map(v => {
+      const s = String(v ?? '');
+      const needQuote = /[;\n"]/g.test(s);
+      const esc = s.replace(/"/g,'""');
+      return needQuote ? `"${esc}"` : s;
+    }).join(';')).join('\n');
+  }
+  function downloadCadastroCSV(){
+    const header = ['nome','email','consentimento','timestamp'];
+    const line = [
+      formData.name,
+      formData.email,
+      formData.consent ? 'sim' : 'não',
+      new Date().toISOString()
+    ];
+    const csv = toCSV([header, line]);
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'cadastro_quiz_cfmv.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  btn2.onclick = ()=> {
+    // guarda cadastro
+    formData.name = nome.value.trim();
+    formData.email = email.value.trim();
+    formData.consent = consent.checked;
+
+    // baixa CSV de cadastro agora
+    downloadCadastroCSV();
+
+    // segue para a Tela 3
+    show(3);
+  };
+
+  // seleção e confirmação por pergunta
+  const selections = {}; // screenId -> { qNum, i }
+
+  document.querySelectorAll('.option').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      const screen = opt.closest('.screen');
+      const screenId = parseInt(screen.id.replace('screen-',''),10);
+      const qNum = parseInt(opt.dataset.q,10);
+      const i = parseInt(opt.dataset.i,10);
+
+      screen.querySelectorAll('.option').forEach(b=> b.classList.remove('selected'));
+      opt.classList.add('selected');
+      selections[screenId] = { qNum, i };
+    });
+  });
+
+  document.querySelectorAll('.confirm').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const screenId = parseInt(btn.dataset.screen,10);
+      const sel = selections[screenId];
+      if(!sel) return;
+
+      const { qNum, i } = sel;
+      const screen = document.getElementById(`screen-${screenId}`);
+      const opts = screen.querySelectorAll('.option');
+
+      // marca certo/errado
+      opts.forEach((b,idx)=>{
+        b.disabled = true;
+        if(idx === answers[qNum]) b.classList.add('correct');
+        if(idx === i && idx !== answers[qNum]) b.classList.add('wrong');
+      });
+      btn.disabled = true;
+
+      // guarda resposta
+      formData.answers.push({
+        qNum,
+        selectedIndex: i,
+        correct: i === answers[qNum],
+        timestamp: new Date().toISOString()
+      });
+
+      // avança automaticamente
+      const target = nextAfterQuestion[screenId];
+      setTimeout(()=> show(target), 700);
+    });
+  });
+
+  // informativas -> próxima
+  document.querySelectorAll('.next-info').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const nextId = parseInt(btn.dataset.next,10);
+      show(nextId);
+    });
+  });
+
+  // Reiniciar
+  document.getElementById('btn-restart')?.addEventListener('click', ()=>{
+    nome.value = ""; email.value = ""; consent.checked = false; validate();
+    formData.name = ""; formData.email=""; formData.consent=false; formData.answers = [];
+    [3,5,7,9,11,13].forEach(id=>{
+      const sc = document.getElementById(`screen-${id}`);
+      sc.querySelectorAll('.option').forEach(b=>{
+        b.disabled = false; b.classList.remove('correct','wrong','selected');
+      });
+      const confirmBtn = sc.querySelector('.confirm');
+      if(confirmBtn) confirmBtn.disabled = false;
+    });
+    show(1);
+  });
+
+  // start
+  show(1);
+})();
+</script>
+</body>
+</html>
